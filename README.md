@@ -24,7 +24,7 @@ o	Provides a brief description of the natural wonder to assist the player's gues
 o	Chosen for adding markers and providing interactive map functionality.
 o	Facilitates tracking player clicks and calculating distances between selected locations and designated natural wonders.
 # 4.Game Rules and Scoring
-•	Points are awarded based on the accuracy of the guess, with a variable score increase based on distance from the correct location.
+•	Points are awarded based on the accuracy of the guess, with a variable score increase based on distance from the correct location.//
 •	The score remains unchanged for incorrect guesses, but feedback is provided to the player.
 •	After each correct guess, the game automatically selects a new natural wonder and updates the hint provided to the player.
 
