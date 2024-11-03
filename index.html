@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Wonders Race</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        #map {
+            height: 600px;
+            margin-bottom: 20px;
+        }
+        #score {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        #feedback {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #333;
+        }
+        #hints {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Natural Wonders Race</h1>
+<div id="map"></div>
+<div id="score">Score: 0</div>
+<div id="feedback"></div>
+<div id="hints">Hints will appear here.</div>
+<button id="startGame">Start Game</button>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
