@@ -24,6 +24,11 @@ o	Facilitates tracking player clicks and calculating distances between selected 
 # 4.Game Rules and Scoring
 •	Points are awarded based on the accuracy of the guess, with a variable score increase based on distance from the correct location. The score remains unchanged for incorrect guesses, but feedback is provided to the player.	After each correct guess, the game automatically selects a new natural wonder and updates the hint provided to the player.
 
+![image](https://github.com/user-attachments/assets/27681508-b3c1-46f4-b11b-1fabea966980)
+
+![image](https://github.com/user-attachments/assets/36249d60-106b-4dcd-b50a-4b1915907272)
+![image](https://github.com/user-attachments/assets/7b38e4a8-d2f7-4fdf-b243-582993027744)
+
 
  
 
