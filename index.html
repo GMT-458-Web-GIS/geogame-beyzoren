@@ -3,50 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Natural Wonders Race</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
-        }
-        #map {
-            height: 600px;
-            margin-bottom: 20px;
-        }
-        #score {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        #feedback {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #333;
-        }
-        #hints {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #555;
-        }
-        button {
-            padding: 10px 15px;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
+    <!-- Giriş Ekranı -->
+    <div id="login-screen">
+        <video autoplay muted loop id="bg-video">
+            <source src="C:/Users/Pc/OneDrive/Masaüstü/geogame/natural.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay">
+            <h1>Welcome to the Natural Wonders Game</h1>
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name" placeholder="Enter your name" />
+            <button id="start-btn">Start Game</button>
+        </div>
+    </div>
 
-<h1>Natural Wonders Race</h1>
-<div id="map"></div>
-<div id="score">Score: 0</div>
-<div id="feedback"></div>
-<div id="hints">Hints will appear here.</div>
-<button id="startGame">Start Game</button>
+    <!-- Oyun Ekranı -->
+    <div id="game-screen" style="display: none;">
+        <div id="question" class="question"></div>
+        <div id="map" style="height: 80vh;"></div>
+        <div id="score">Score: 0</div>
+        <button id="back-btn">Back</button>
+    </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+    <script src="script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 </body>
 </html>
