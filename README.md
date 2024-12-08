@@ -80,10 +80,4 @@ If you want to contribute to the project, feel free to fork the repository and s
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Contact
-
-If you have any questions or suggestions, feel free to contact me at [your-email@example.com].
-
----
-
 **Enjoy playing and test your knowledge about Turkey's famous landmarks!**
