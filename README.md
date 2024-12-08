@@ -1,4 +1,5 @@
-![Uploading image.png…]()
+you can visit my GeoGame -----> https://gmt-458-web-gis.github.io/geogame-beyzoren/
+![Ekran görüntüsü 2024-12-08 203949](https://github.com/user-attachments/assets/e88b5c9f-6a1e-46da-a8d3-25558b649161)
 
 # Where in Turkey? - GeoGame
 
