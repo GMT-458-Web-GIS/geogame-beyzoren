@@ -1,134 +1,236 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const loginScreen = document.getElementById('login-screen');
-    const gameScreen = document.getElementById('game-screen');
-    const startBtn = document.getElementById('start-btn');
-    const nameInput = document.getElementById('name');
-    const backBtn = document.getElementById('back-btn');
-    const scoreDisplay = document.getElementById('score');
-    const questionDisplay = document.getElementById('question');
 
-    let score = 0;
-    let currentWonderIndex = 0;
+// Symbols and city information
+const symbols = [
+    {
+        name: "Boğaz Köprüsü",
+        description: "This famous bridge connects two continents and offers breathtaking views of the water.",
+        city: "Istanbul",
+        coordinates: [41.0760, 29.0350], // Istanbul coordinates
+    },
+    {
+        name: "Mevlana Statue",
+        description: "A statue representing a prominent figure of spirituality, renowned for its teachings and philosophy.",
+        city: "Konya",
+        coordinates: [37.8714, 32.4840], // Konya coordinates
+    },
+    {
+        name: "Cappadocia Fairy Chimneys",
+        description: "These naturally formed, cone-shaped rock formations are famous for their surreal appearance.",
+        city: "Nevşehir",
+        coordinates: [38.7075, 34.7958], // Nevşehir coordinates
+    },
+    {
+        name: "Izmir Clock Tower",
+        description: "A historical clock tower in the heart of the city, known for its architectural elegance.",
+        city: "Izmir",
+        coordinates: [38.4192, 27.1287], // Izmir coordinates
+    },
+    {
+        name: "Aspendos Theatre",
+        description: "An ancient Roman theater, renowned for its excellent acoustics and historical significance.",
+        city: "Antalya",
+        coordinates: [36.8840, 30.8010], // Antalya coordinates
+    },
+    {
+        name: "Topkapi Palace",
+        description: "A former imperial palace that served as the residence of Ottoman sultans for centuries.",
+        city: "Istanbul",
+        coordinates: [41.0136, 28.9855], // Istanbul coordinates
+    },
+    {
+        name: "Mausoleum of Halicarnassus",
+        description: "One of the Seven Wonders of the Ancient World, this tomb was built for a Persian satrap.",
+        city: "Bodrum",
+        coordinates: [37.0373, 27.4295], // Bodrum coordinates
+    },
+    {
+        name: "Bodrum Castle",
+        description: "A medieval castle built by the Knights of St. John, offering panoramic views of the coastline.",
+        city: "Bodrum",
+        coordinates: [37.0369, 27.4305], // Bodrum coordinates
+    },
+    {
+        name: "Sumela Monastery",
+        description: "A cliffside monastery that blends beautifully with the landscape, known for its stunning frescoes.",
+        city: "Trabzon",
+        coordinates: [40.0583, 39.7139], // Trabzon coordinates
+    },
+    {
+        name: "Pergamon Acropolis",
+        description: "An ancient city located on a hilltop, famous for its well-preserved ruins and ancient structures.",
+        city: "Bergama",
+        coordinates: [39.1291, 27.1827], // Bergama coordinates
+    },
+    {
+        name: "Nemrut Daği",
+        description: "A mountain with monumental statues and tombs, a UNESCO World Heritage site.",
+        city: "Adiyaman",
+        coordinates: [37.9305, 38.6933], // Adıyaman coordinates
+    },
+    {
+        name: "Blue Mosque",
+        description: "A stunning mosque known for its blue-tiled interior, one of the most iconic landmarks of the region.",
+        city: "Istanbul",
+        coordinates: [41.0056, 28.9762], // Istanbul coordinates
+    },
+    {
+        name: "Anitkabir",
+        description: "A mausoleum dedicated to the founder of the Republic of Turkey, a symbol of national pride.",
+        city: "Ankara",
+        coordinates: [39.9255, 32.8661], // Ankara coordinates
+    },
+    {
+        name: "Mount Ararat",
+        description: "The highest peak in Turkey, believed to be the resting place of Noah's Ark in some ancient traditions.",
+        city: "Ağri",
+        coordinates: [39.7200, 44.3000], // Ağrı coordinates
+    },
+    {
+        name: "Taksim Square",
+        description: "A central hub for cultural events, protests, and celebrations, surrounded by iconic buildings.",
+        city: "Istanbul",
+        coordinates: [41.0369, 28.9858], // Istanbul coordinates
+    },
+    {
+        name: "Dolmabahçe Palace",
+        description: "A lavish palace that served as the administrative center of the Ottoman Empire in the 19th century.",
+        city: "Istanbul",
+        coordinates: [41.0395, 29.0002], // Istanbul coordinates
+    },
+    {
+        name: "Çirağan Palace",
+        description: "An opulent Ottoman palace overlooking the Bosphorus, now a luxury hotel.",
+        city: "Istanbul",
+        coordinates: [41.0522, 29.0155], // Istanbul coordinates
+    },
+    {
+        name: "Kiz Kulesi",
+        description: "A small islet in the Bosphorus, home to an iconic tower that has become a symbol of the city.",
+        city: "Istanbul",
+        coordinates: [41.0203, 29.0587], // Istanbul coordinates
+    },
+    {
+        name: "Mount Uludağ",
+        description: "A popular winter sports destination with breathtaking views and scenic beauty.",
+        city: "Bursa",
+        coordinates: [40.2167, 29.0667], // Bursa coordinates
+    },
+    {
+        name: "Ephesus Ancient Ruins",
+        description: "The ancient city of Ephesus is famous for its Temple of Artemis, one of the Seven Wonders of the Ancient World.",
+        city: "Aydin",
+        coordinates: [37.9497, 27.3630], // Aydın coordinates
+    },
+    {
+        name: "Fethiye Oludeniz",
+        description: "A stunning turquoise lagoon surrounded by steep mountains, famous for paragliding.",
+        city: "Muğla",
+        coordinates: [36.4556, 29.1172], // Muğla coordinates
+    },
+    {
+        name: "Grand Bazaar",
+        description: "One of the largest and oldest covered markets in the world, offering a unique shopping experience.",
+        city: "Istanbul",
+        coordinates: [41.0104, 28.9688], // Istanbul coordinates
+    },
+    {
+        name: "Kapadokya Göreme Valley",
+        description: "A picturesque valley with rock-hewn churches and fairy chimneys, a must-see historical site.",
+        city: "Nevşehir",
+        coordinates: [38.6421, 34.8282], // Nevşehir coordinates
+    },
+    {
+        name: "Atatürk Forest Farm and Zoo",
+        description: "A research farm and zoo offering a glimpse into the history of Turkish agriculture and animal care.",
+        city: "Ankara",
+        coordinates: [39.9747, 32.8527], // Ankara coordinates
+    },
+    {
+        name: "Kuşadasi National Park",
+        description: "A beautiful coastal park with rich biodiversity, perfect for nature lovers and bird watchers.",
+        city: "Aydin",
+        coordinates: [37.8793, 27.2707], // Aydın coordinates
+    },
+    {
+        name: "Çanakkale Martyrs' Memorial",
+        description: "A monument commemorating the soldiers who fought and died in the Gallipoli Campaign during World War I.",
+        city: "Çanakkale",
+        coordinates: [40.0060, 26.4066], // Çanakkale coordinates
+    },
+    {
+        name: "Kocaeli Gebze History Museum",
+        description: "A museum dedicated to the rich history of the Gebze region and its cultural heritage.",
+        city: "Kocaeli",
+        coordinates: [40.9958, 29.4266], // Kocaeli coordinates
+    },
+    {
+        name: "Mardin Grand Mosque",
+        description: "A mosque with beautiful Islamic architecture, located in the heart of the historic city.",
+        city: "Mardin",
+        coordinates: [37.3187, 40.7372], // Mardin coordinates
+    },
+    {
+        name: "Güney Şehitlik",
+        description: "A serene cemetery honoring the sacrifices made by those who fought for freedom and independence.",
+        city: "Hatay",
+        coordinates: [36.1854, 36.3664], // Hatay coordinates
+    },
+    {
+        name: "Kocatepe Mosque",
+        description: "A modern mosque with impressive Ottoman architecture, a prominent landmark in the city.",
+        city: "Ankara",
+        coordinates: [39.9366, 32.8603], // Ankara coordinates
+    },
+    {
+        name: "Konyaalti Beach",
+        description: "A famous beach offering beautiful views, perfect for swimming and relaxation.",
+        city: "Antalya",
+        coordinates: [36.8741, 30.5944], // Antalya coordinates
+    }
+];
+// Initialize the map
+const map = L.map('map').setView([39.9334, 32.8597], 6); // Default center on Turkey
 
-    // Go back to the login screen when the back button is clicked
-    backBtn.addEventListener('click', () => {
-        gameScreen.style.display = 'none';
-        loginScreen.style.display = 'block';
-    });
+// Add a tile layer (OpenStreetMap)
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
 
-    // Start the game when the start button is clicked
-    startBtn.addEventListener('click', () => {
-        const userName = nameInput.value.trim();
-        if (userName !== "") {
-            loginScreen.style.display = 'none';
-            gameScreen.style.display = 'block';
-            initializeMap(); // Initialize the map
+// Define a global variable to track score
+let score = 0;
+let currentSymbol = {};
+
+// Display a random symbol
+function updateSymbol() {
+    currentSymbol = getRandomSymbol();
+    document.getElementById('symbol-description').innerText = currentSymbol.description;
+}
+
+// Add markers for all symbols to the map
+symbols.forEach(symbol => {
+    const marker = L.marker(symbol.coordinates).addTo(map);
+    marker.bindPopup(`<b>${symbol.name}</b>`);
+
+    // Add a click event on each marker
+    marker.on('click', function () {
+        const distance = map.distance(symbol.coordinates, currentSymbol.coordinates);
+        if (distance < 10000) { // If clicked close to the correct symbol (within 10 km)
+            // Correct answer
+            score++;
+            document.getElementById('score-value').innerText = score;
+            updateSymbol(); // Get a new random symbol
+            alert('Correct! Next symbol!');
         } else {
-            alert("Please enter a name!");
+            alert('Wrong city, try again!');
         }
     });
-
-    // Function to initialize the map
-    function initializeMap() {
-        const map = L.map('map').setView([20, 0], 2); // Initial map view
-
-        // Add OpenStreetMap layer to the map
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
-
-        // Doğal Harikalar listesi
-        const naturalWonders = [
-            { name: "Great Barrier Reef", location: [-18.2871, 147.6992], description: "The world's largest coral reef system." },
-            { name: "Machu Picchu", location: [-13.1631, -72.5449], description: "An ancient Incan city in Peru." },
-            { name: "Yosemite National Park", location: [37.8651, -119.5383], description: "Famous for its stunning natural beauty." },
-            { name: "Grand Canyon", location: [36.1069, -112.1129], description: "One of the largest canyons in the world." },
-            { name: "Santorini", location: [36.3932, 25.4615], description: "An island famous for its stunning white buildings." },
-            { name: "Great Pyramids of Giza", location: [29.9792, 31.1342], description: "The most famous structures of ancient Egypt." },
-            { name: "Victoria Falls", location: [-17.9243, 25.8572], description: "One of the largest waterfalls in the world." },
-            { name: "Salar de Uyuni", location: [-20.1338, -67.4891], description: "The world's largest salt flat." },
-            { name: "Himalayas", location: [28.6139, 77.2090], description: "The world's highest mountain range." },
-            { name: "Amazon Rainforest", location: [-3.4653, -62.2159], description: "The largest tropical rainforest in the world." },
-            { name: "Stonehenge", location: [51.1789, -1.8262], description: "An ancient stone structure and a mysterious site." },
-            { name: "Serengeti National Park", location: [-2.3333, 34.8333], description: "Home to one of Africa's largest animal migrations." },
-            { name: "Cappadocia", location: [38.6340, 34.8270], description: "Famous for its fairy chimneys and underground cities." },
-            { name: "Halong Bay", location: [20.9200, 107.0105], description: "Known for its breathtaking limestone islands." },
-            { name: "Antelope Canyon", location: [36.8619, -111.3743], description: "Famous for its stunning sandstone formations." },
-            { name: "Galapagos Islands", location: [-0.9538, -90.9656], description: "Home to unique fauna and flora." },
-            { name: "Niagara Falls", location: [43.0794, -79.0742], description: "One of the most recognizable waterfalls in the world." },
-            { name: "Mount Ararat", location: [39.7028, 44.3084], description: "Turkey's highest peak." },
-            { name: "Uluru (Ayers Rock)", location: [-25.3444, 131.0369], description: "A natural monument known for its red rock." },
-            { name: "Zhangjiajie National Forest", location: [29.1465, 110.4784], description: "Famous for its high pillars and stunning scenery." },
-            { name: "Plitvice Lakes", location: [44.8831, 15.5857], description: "Known for its beautiful waterfalls and lakes." },
-            { name: "Bora Bora", location: [-16.5000, -151.7415], description: "A tropical paradise with turquoise waters." },
-            { name: "Huangshan (Yellow Mountains)", location: [30.1421, 118.1684], description: "Known for its stunning scenery and unique rock formations." },
-            { name: "Göreme Open-Air Museum", location: [38.6453, 34.8275], description: "Rich in history and cultural heritage in Cappadocia." },
-            { name: "Fjords of Norway", location: [60.4633, 8.4869], description: "Known for its stunning landscapes and deep waterways." },
-            { name: "Vikingskapet", location: [64.8495, 7.6232], description: "A region with high mountains and magnificent fjords." },
-            { name: "Gobi Desert", location: [42.5, 105.0], description: "The largest desert in Asia." },
-            { name: "Banff National Park", location: [51.4968, -115.9281], description: "Known for its stunning lakes and mountain scenery." },
-            { name: "Cinque Terre", location: [44.1040, 9.7373], description: "Famous for its colorful villages and beautiful beaches." },
-            { name: "Rocky Mountains", location: [39.5501, -105.7821], description: "The longest mountain range in the world." },
-            { name: "Orinoco River", location: [8.2320, -67.2378], description: "One of South America's largest rivers." },
-            { name: "The Great Lakes", location: [43.4084, -82.0497], description: "A group of five large freshwater lakes in North America." },
-            { name: "Lake Baikal", location: [53.5587, 108.1650], description: "The deepest lake in the world." },
-            { name: "Trolltunga", location: [60.1393, 6.7370], description: "A famous rock formation with breathtaking views." },
-            { name: "Iguazu Falls", location: [-25.6953, -54.4367], description: "Massive waterfalls located on the border of Brazil and Argentina." },
-            { name: "Sossusvlei", location: [-24.7338, 15.2540], description: "High sand dunes in the Namib Desert." },
-            { name: "Wulingyuan", location: [29.3485, 110.6162], description: "Known for its stunning pillars and deep ravines." },
-            { name: "Isle of Skye", location: [57.5, -5.5], description: "One of Scotland's most beautiful islands." },
-            { name: "Maldives", location: [3.2028, 73.2207], description: "Famous for its white sandy beaches and coral reefs." },
-            { name: "Patagonia", location: [-45.0, -67.0], description: "Known for its stunning landscapes and wildlife." },
-            { name: "Great Britain", location: [55.3781, -3.4360], description: "Known for its diverse natural beauty and historical sites." },
-            { name: "Mount Rainier", location: [46.8523, -121.7603], description: "One of the highest volcanic peaks in the United States." },
-            { name: "Capri Island", location: [40.5504, 14.2231], description: "A famous holiday destination known for the Blue Grotto." },
-            { name: "Maroon Bells", location: [39.0634, -106.4577], description: "Stunning mountain peaks and lake scenery." },
-            { name: "Blue Hole", location: [17.3150, -86.2576], description: "A deep sea sinkhole in Belize." },
-            { name: "Kruger National Park", location: [-24.9890, 31.5460], description: "One of South Africa's largest national parks." },
-            { name: "Whistler", location: [50.1163, -122.9574], description: "Famous for skiing and winter sports." },
-            { name: "Vancouver Island", location: [48.4284, -123.3656], description: "Known for its natural beauty and cultural richness." },
-            { name: "Kamchatka Peninsula", location: [56.0000, 159.0000], description: "Known for its volcanic activity." },
-            { name: "Sierra Nevada", location: [37.6939, -119.5383], description: "A popular area for hiking and mountaineering." },
-            { name: "Yosemite Valley", location: [37.7462, -119.6584], description: "Known for its unique landscapes and natural beauty." },
-            { name: "White Cliffs of Dover", location: [51.1280, 1.4049], description: "Famous for its white chalk cliffs." },
-            { name: "Raja Ampat Islands", location: [-0.2384, 130.5170], description: "One of the best diving spots in the world." },
-            { name: "Gökova Bay", location: [36.8786, 28.3385], description: "Known for its stunning nature and sea views." },
-            { name: "Trolltunga", location: [60.1393, 6.7370], description: "A famous rock formation with breathtaking views." }
-        ];
-
-        // Add markers for natural wonders
-        const markers = [];
-        naturalWonders.forEach((wonder, index) => {
-            const marker = L.marker(wonder.location, { icon: L.icon({ iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png', iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34], shadowSize: [41, 41] }) }).addTo(map);
-            marker.bindPopup(`<b>${wonder.name}</b><br>${wonder.description}`);
-
-            // Add click event for each marker
-            marker.on('click', () => {
-                if (wonder.name === naturalWonders[currentWonderIndex].name) {
-                    score += 10; // Correct answer
-                    alert('Correct! Your score: ' + score);
-                } else {
-                    alert('Wrong answer!');
-                }
-
-                // Update the question
-                currentWonderIndex++;
-                if (currentWonderIndex < naturalWonders.length) {
-                    questionDisplay.textContent = `Question: Where is ${naturalWonders[currentWonderIndex].name}?`;
-                } else {
-                    alert(`Game Over! Your final score: ${score}`);
-                    gameScreen.style.display = 'none';
-                    loginScreen.style.display = 'block';
-                }
-
-                // Update the score
-                scoreDisplay.textContent = 'Score: ' + score;
-            });
-
-            markers.push(marker);
-        });
-
-        // Show the first question
-        questionDisplay.textContent = `Question: Where is ${naturalWonders[currentWonderIndex].name}?`;
-    }
 });
+
+// Function to get a random symbol from the array
+function getRandomSymbol() {
+    const randomIndex = Math.floor(Math.random() * symbols.length);
+    return symbols[randomIndex];
+}
+
+// Start the game by displaying the first symbol
+updateSymbol();

@@ -1,0 +1,85 @@
+/* body ve genel stil */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8e0f4; /* Açık pembe arka plan */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Oyun konteyneri */
+.game-container {
+    max-width: 1200px;
+    width: 90%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Başlık kısmı */
+header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #ff66b2; /* Pembe başlık rengi */
+    font-size: 36px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Sorular kutusu, açık pembe arka plan */
+#question {
+    font-size: 20px;
+    margin: 10px 0;
+    color: #555;
+    padding: 15px;
+    background-color: #ffe6f2; /* Açık pembe arka plan */
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Harita stili */
+#map {
+    height: 500px;
+    width: 100%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Skor kısmı, sağ üstte gri kutu */
+#score {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #d3d3d3; /* Gri arka plan */
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Link ve butonlar */
+button, a {
+    text-decoration: none;
+    padding: 10px 20px;
+    background-color: palevioletred;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover, a:hover {
+    background-color: palevioletred;
+}
